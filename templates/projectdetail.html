@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    project
+{% endblock %}
+
+{% block main %}
+<form action="" method="post">
+    
+    <div class="yourtask">
+    {% for info in info %}
+        <h2>Project Detail: {{ info.project_name }}</h2> 
+        <p></p>
+        <hr />
+        
+        <div class="yourtask-detail">
+        <p><b>Request Time</b>: {{ info.requesttime }}</p>
+        <p><b>By</b>: {{ info.username }}</p>
+        <p><b>To</b>: {{ info.toemail }}</p>
+        <p><b>Cc</b>: {{info.cc }}</p>
+        <p><b>Priority</b>: {{ info.priority }}</p>
+        <p><b>Due Date</b>: {{ info.duedate }}  {{ info.duetime }}</p>
+        <p><b>Detail</b>: {{ info.detail }}</p>
+        <p><b>Attaced Files</b>: {{ info.files }}</p>
+        <p><b>Status</b>: {{ info.status }}</p> 
+        </div>
+    {% endfor %}
+    
+    <hr />
+    {% if recieved_page %}
+    <h2>Reply</h2> 
+    <hr/>
+        {% for replyinfo in replyinfo %}
+        <div class="yourtask-detail">
+            <p><b>Reply Time</b>: {{ replyinfo.reply }}</p>
+            <p><b>Detail</b>: {{ replyinfo.detail }}</p>
+            <p><b>Files</b>: {{ replyinfo.files }}</p>
+        </div>
+        {% endfor %}
+    <hr/>
+    {% endif %} 
+     
+     {% if not notshow %}
+    <button name="complete" value="complete" class="bt-size" type="submit">Complete the task</button>
+    <button name="reply" value="reply" class="bt-size" type="submit">Reply</button> 
+     {% endif %}    
+    </div>
+
+</form>
+{% endblock %}

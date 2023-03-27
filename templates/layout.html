@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+        <div id="logo">
+            <a class="active" href="/">
+                 <img src="/static/RequestMe logo.png" alt="logo" width = 400>
+            </a>
+        </div>
+        <link href="/static/styles.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        
+
+        <title>{% block title %}{% endblock %}</title>
+        
+        <div class="nav-container">
+            <nav>
+            <ul class="nav-list">
+                <li><a id="nextlist" href="/history">History</a></li>
+                <li><a href="/requestform">Request Form</a></li>
+                <li><a href="/yourtask">Your Task</a></li>
+                <li><a href="/recieved">Recieved</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="/logout">Log out</a></li>
+            </ul>
+            </nav>
+        </div>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+                {% for category, message in messages %}
+                    <ul class="flashes-{{ category }}">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                    <li>{{ message }}</li>
+                {% endfor %}
+                    </ul>
+          {% endif %}
+        {% endwith %}
+        
+    </head>
+
+    <body>
+        <main>
+            {% block main %}{% endblock %}
+        </main>
+    </body>
+
+</html>

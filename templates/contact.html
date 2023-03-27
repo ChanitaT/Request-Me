@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    contact
+{% endblock %}
+
+{% block main %}
+
+<form action="/contact" id="contact-form" name="contact-form" method="post">
+<div class="yourtask">    
+  
+  <h1>Contact me</h1>
+  <p>Do you have any questions? Please do not hesitate to contact me directly. I will come back to you within a matter of hours to help you.</p>
+  
+  <input autocomplete="off" type="text" name="subject" placeholder="Subject" required/>
+  
+  <textarea name="message" rows="6" placeholder="Write messages and comments here..." ></textarea>
+  <button type="submit" onclick="document.getElementById('contact-form').submit();">Send message</button>
+  <div class="status"></div>      
+</div>
+</form>
+
+{% endblock %}

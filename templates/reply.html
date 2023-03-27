@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    project
+{% endblock %}
+
+{% block main %}
+<form action="" method="post">
+    
+    <div class="yourtask">
+    {% for info in info %}
+        <h1>Reply for project {{ info.project_name }}</h1> 
+        <p></p>
+        <hr />
+        
+        <label for="comment">Detail</label>
+        <textarea name="comment" rows="10" placeholder="Write details and comments here..." required></textarea>
+        
+         <label for="file">Select files:</label>
+         <input type="file" id="file" name="file" multiple><br><br>
+    {% endfor %}
+    
+    <button name="complete_reply" value="complete_reply" class="bt-size" type="submit">Reply</button> 
+   
+    </div>
+
+</form>
+{% endblock %}
