@@ -1,0 +1,130 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    history
+{% endblock %}
+
+{% block main %}
+
+<form action="/history" method="post">
+<div class="yourtask">
+        <h1>History</h1>
+        <p>You've been doing great on the tasks!</p> 
+        <hr />
+
+<table class="table-sortable" id="tabletask">
+    <thead>
+    <tr>
+        <th data-column="requesttime" data-order="desc">Request time </th>
+        <th data-column="projectname" data-order="desc">Project Name </th>
+        <th data-column="by" data-order="desc">Asigned by </th>
+        <th data-column="priority" data-order="desc">Priority </th>
+        <th data-column="status" data-order="desc">Status </th>
+        <th data-column="send/recieve" data-order="desc">Send/Recieve </th>
+    </tr>
+    </thead>
+    <tbody>
+            {% for list in info %}
+                <tr>
+                    <td>{{ list.requesttime }}</td>
+                    <td><a href="/history/{{ list.no }}">{{ list.project_name }}</a></td> 
+                    <td>{{ list.username }}</td>
+                    <td>
+                        {% if list.priority.lower() == "fyi" %} 
+                            <div id="textbox" style="background-color: #848482;">{{ list.priority }}</div>
+                        {% elif list.priority.lower() == "low" %}
+                            <div id="textbox" style="background-color: #007fff;">{{ list.priority }}</div>
+                        {% elif list.priority.lower() == "medium" %}
+                            <div id="textbox" style="background-color: green;">{{ list.priority }}</div>
+                        {% elif list.priority.lower() == "high" %}
+                            <div id="textbox" style="background-color: #fdee00;">{{ list.priority }}</div>
+                        {% elif list.priority.lower() == "emergency" %}
+                            <div id="textbox" style="background-color: red;">{{ list.priority }}</div>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if list.status == "COMPLETED" %} 
+                            <div style="color: #848482;">{{ list.status }}</div>
+                        {% elif list.status == "IN PROGRESS" %}
+                            <div style="color: green;">{{ list.status }}</div>
+                        {% endif %}
+                    </td>
+                    <td title="Recieve">&#128236;</td>
+                </tr>
+            {% endfor %}
+            
+            {% for list in sendinfo %}
+                <tr>
+                    <td>{{ list.requesttime }}</td>
+                    <td><a href="/history/{{ list.no }}">{{ list.project_name }}</a></td> 
+                    <td>{{ list.username }}</td>
+                    <td>
+                        {% if list.priority.lower() == "fyi" %} 
+                            <div id="textbox" style="background-color: #848482;">{{ list.priority }}</div>
+                        {% elif list.priority.lower() == "low" %}
+                            <div id="textbox" style="background-color: #007fff;">{{ list.priority }}</div>
+                        {% elif list.priority.lower() == "medium" %}
+                            <div id="textbox" style="background-color: green;">{{ list.priority }}</div>
+                        {% elif list.priority.lower() == "high" %}
+                            <div id="textbox" style="background-color: #fdee00;">{{ list.priority }}</div>
+                        {% elif list.priority.lower() == "emergency" %}
+                            <div id="textbox" style="background-color: red;">{{ list.priority }}</div>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if list.status == "COMPLETED" %} 
+                            <div style="color: #848482;">{{ list.status }}</div>
+                        {% elif list.status == "IN PROGRESS" %}
+                            <div style="color: green;">{{ list.status }}</div>
+                        {% endif %}
+                    </td>
+                    <td title="Send">&#128228;</td>
+                </tr>
+            {% endfor %}
+            
+    </tbody>
+</table>
+
+<script>
+function sortTableByColumn(table, column, asc = true) {
+    const dirModifier = asc ? 1 : -1;
+    const tBody = table.tBodies[0];
+    const rows = Array.from(tBody.querySelectorAll("tr"));
+
+    // Sort each row
+    const sortedRows = rows.sort((a, b) => {
+        const aColText = a.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
+        const bColText = b.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
+
+        return aColText > bColText ? (1 * dirModifier) : (-1 * dirModifier);
+    });
+
+    // Remove all existing TRs from the table
+    while (tBody.firstChild) {
+        tBody.removeChild(tBody.firstChild);
+    }
+
+    // Re-add the newly sorted rows
+    tBody.append(...sortedRows);
+
+    // Remember how the column is currently sorted
+    table.querySelectorAll("th").forEach(th => th.classList.remove("th-sort-asc", "th-sort-desc"));
+    table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-asc", asc);
+    table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-desc", !asc);
+}
+
+document.querySelectorAll(".table-sortable th").forEach(headerCell => {
+    headerCell.addEventListener("click", () => {
+        const tableElement = headerCell.parentElement.parentElement.parentElement;
+        const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
+        const currentIsAscending = headerCell.classList.contains("th-sort-asc");
+
+        sortTableByColumn(tableElement, headerIndex, !currentIsAscending);
+    });
+});
+
+</script>
+
+</div>
+</form>
+{% endblock %}

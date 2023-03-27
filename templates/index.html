@@ -1,0 +1,97 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block main %}
+<form action="/" method="post">
+    {% for info in userinfo %}
+    <div class="index">
+        <div class="leftside">
+        <img src="/static/user.png" alt="user" class="rounded-circle" width="150">
+        <h3>{{ info.username }}</h3>
+        <p>{{ info.email }}</p>
+        <hr/>
+        
+        <p><b>Name</b>: {{ info.name }}</p>
+        <p><b>Surname</b>: {{ info.surname }}</p>
+        </div>     
+    {% endfor %}
+
+
+        <div class="rightside">
+            <div class="rightside-a">
+                <div class="pie animate" style="--p:{{ percent_complete }};--c:green;"> {{ percent_complete }}%</div>
+                <p>Percentage of task completion</p>
+            </div>
+            
+            <div class="rightside-b">
+                <table class="graph">
+	            <thead>
+        		<tr>
+        			<th scope="col">Item</th>
+        			<th scope="col">Percent</th>
+        		</tr>
+            	</thead><tbody>
+            		<tr style="height:{{ fyi_p }}%">
+            			<th scope="row">FYI</th>
+            			<td><span>{{ fyi_p }}%</span></td>
+            		</tr>
+            		<tr style="height:{{ low_p }}%">
+            			<th scope="row">Low</th>
+            			<td style="background:green"><span>{{ low_p }}%</span></td>
+            		</tr>
+            		<tr style="height:{{ medium_p }}%">
+            			<th scope="row">Medium</th>
+            			<td style="background:yellow"><span>{{ medium_p }}%</span></td>
+            		</tr>
+            		<tr style="height:{{ high_p }}%">
+            			<th scope="row">High</th>
+            			<td style="background:orange"><span>{{ high_p }}%</span></td>
+            		</tr>
+            		<tr style="height:{{ emergency_p }}%">
+            			<th scope="row">Emergency</th>
+            			<td style="background:red"><span>{{ emergency_p }}%</span></td>
+            		</tr>
+            	</tbody>
+            </table>
+            <p>Priority-based bar chart of assigned tasks</p>
+             </div>  
+             
+             
+            <div class="rightside-c">
+                <table class="tableindex">
+                {% if not next7days %}
+                    <p>There is no task in the coming week.</p>
+                {% else %}
+                  <tr>
+                    <th>Due Date</th>
+                    <th>Project Name</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                  </tr>
+                  {% for data in next7days %} 
+                      <tr>
+                        <td>{{ data.duedate }}</td>
+                        <td id="tableindex"><a href="/history/{{ data.no }}">{{ data.project_name }}</a></td>
+                        <td>{{ data.priority }}</td>
+                        <td>{{ data.status }}</td>
+                      </tr>
+                      {% endfor %}
+                 
+                 </table> 
+                 <p>the tasks with a due date of less than 7 days</p>
+                 {% endif %}
+            </div> 
+            
+        </div> 
+        
+        
+
+
+
+    </div>
+    
+</form>
+{% endblock %}

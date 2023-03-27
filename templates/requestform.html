@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Form
+{% endblock %}
+
+{% block main %}
+
+<form action="/requestform" method="post">
+   
+    
+    <div class="requestform">
+        <h1>Request Form</h1>
+        <p>Fill this from to request a task and send an Email.</p> 
+        <hr />
+        <p></p>
+        
+        <label for="tousername">To (Email)</label>
+        <input autocomplete="off" type="text" name="tousername" placeholder="example1@email.com, example2@email.com" required/>
+        
+        <label for="cc">Cc</label>
+        <input autocomplete="off" type="text" name="cc" placeholder="example3@email.com, example4@email.com" />
+        
+        <label for="projectname">Project Name</label>
+        <input autocomplete="off" type="text" name="projectname" placeholder="Project Name" required/>
+        
+        <label for="priority">Priority</label>
+        <select id="priority" name="priority"> 
+              <option disabled selected>Select Priority</option>
+              <option name="FYI" value="FYI">FYI</option>
+              <option name="Low" value="Low">Low</option>
+              <option name="Medium" value="Medium">Medium</option>
+              <option name="High" value="High">High</option>
+              <option name="Emergency" value="Emergency">Emergency</option>
+        </select>
+        
+        <label for="duedate">Due Date</label>
+        <div class="two-item">
+        <input type="date" id="duedate" name="duedate">
+        <input type="time" id="duetime" name="duetime">
+        </div>
+        
+        <label for="detail">Detail</label>
+        <textarea name="detail" rows="6" placeholder="Write detail and comment here..."></textarea>
+        
+         <label for="file">Select files:</label>
+         <input type="file" id="file" name="file" multiple><br><br>
+
+        <button type="submit">Submit</button></button>
+    </div>
+    
+</form>
+{% endblock %}
